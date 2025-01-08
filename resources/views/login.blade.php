@@ -42,9 +42,9 @@
                         <div class="alert alert-danger mt-3">
                             <ul class="m-0">
                                 @foreach ($errors->all() as $error)
-                                    
+
                                     <li> {{ $error }} </li>
-                                    
+
                                 @endforeach
                             </ul>
                         </div>
@@ -54,4 +54,5 @@
             </div>
         </div>
     </div>
+    <!-- TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE -- >
 @endsection
