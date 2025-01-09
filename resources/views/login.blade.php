@@ -13,16 +13,26 @@
                     <!-- form -->
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-12">
-                            <form action="/loginSubmit" method="post">
+                            <form action="/loginSubmit" method="post" novalidate>
                                 @csrf
                                 <div class="mb-3">
                                     <label for="text_username" class="form-label">Username</label>
-                                    <input type="text" class="form-control bg-dark text-info" name="text_username" >
-                                    <!-- incluir o type="email" para validaação no html do login com e-mail-->
-                                </div>
+                                    <input type="email" class="form-control bg-dark text-info" name="text_username" value="{{old('text_username')}}" required ><!-- incluir o type="email" para validaação no html do login com e-mail-->
+                                    @error("text_username")
+                                        <div class="text-danger mt-3">
+                                            {{$message}}
+                                        </div>
+                                    @enderror   
+                                    
+                                   </div>
                                 <div class="mb-3">
                                     <label for="text_password" class="form-label">Password</label>
-                                    <input type="password" class="form-control bg-dark text-info" name="text_password" > <!-- incluir required no fim para garantir a inserção de dados no form -->
+                                    <input type="password" class="form-control bg-dark text-info" name="text_password"  value="{{old('text_password')}}" required> <!-- incluir required no fim para garantir a inserção de dados no form -->
+                                    @error("text_password")
+                                        <div class="text-danger mt-3">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-secondary w-100">LOGIN</button>
@@ -38,7 +48,7 @@
 
                     {{-- errors --}}
 
-                    @if($errors-> any())
+                    {{-- @if($errors-> any())
                         <div class="alert alert-danger mt-3">
                             <ul class="m-0">
                                 @foreach ($errors->all() as $error)
@@ -48,11 +58,11 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
 
                 </div>
             </div>
         </div>
     </div>
-    <!-- TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE -- >
+ 
 @endsection
