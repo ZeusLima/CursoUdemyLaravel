@@ -32,6 +32,11 @@ class UsersTableSeeder extends Seeder
                 'username' => 'user3@gmail.com',
                 'password' => bcrypt('abc123456'),
                 'created_at' => date('Y-m-d H:i:s')
+            ],
+            [
+                'username' => 'user4@gmail.com',
+                'password' => bcrypt('abc123456'),
+                'created_at' => date('Y-m-d H:i:s')
             ]
         ]
             
