@@ -18,7 +18,7 @@ class AuthController extends Controller
         public function loginSubmit(Request $request)
         {
 
-            
+
             //form validation
              $request->validate(
                 [
@@ -26,10 +26,10 @@ class AuthController extends Controller
                     'text_password' => 'required|min:8|max:16'
                 ],
             //errror messages
-                [            
+                [
                     'text_username.required' => "o username é obrigatóriox",
                     'text_username.email' => 'username deve ser um e-mail válido',
-                    
+
                     'text_password.required' => 'o password é obrigatório',
                     'text_password.min' => "mínimo de :min dígitos no password",
                     'text_password.max' => "máximo de :max dígitos no password"
@@ -49,11 +49,22 @@ class AuthController extends Controller
             // print_r($users);
             // echo '<pre>';
 
-            //validação de usuário. 1) Checar se existe usuário
 
+
+//test connection database
+// try {
+//     DB::connection()->getPdo();
+//     echo "connection succeed";
+//     //code...
+// } catch (\PDOException $e) {
+//     echo "connection fail" . $e->getMessage();
+// }
+
+
+            //validação de usuário. 1) Checar se existe usuário
             $user = User::where('username', $username)
                         ->where('deleted_at', NULL)
-                        ->first();      
+                        ->first();
 
             if(!$user){
                 return redirect()
@@ -61,21 +72,22 @@ class AuthController extends Controller
                         ->withInput()
                         ->with('loginError','Username ou password Incorreto');
             }
-            
+
             //dd($password);
             if( !password_verify($password, $user->password) ){
-                
+
                 return redirect()
                     ->back()
                     ->withInput()
                     ->with('loginError','Username ou password Incorreto');
-                    
+
             }
+
             echo "LOGOU";
             //update last login
             $user->last_login = date('y-m-d H-i-s');
             $user->save();
-            
+
             //login user
             session([
                 'user' => [
@@ -83,24 +95,17 @@ class AuthController extends Controller
                     'username' => $user->$username
                 ]
 
-            ]);          
+            ]);
 
-        
-            //test connection database
-            // try {
-            //     DB::connection()->getPdo();
-            //     echo "connection succeed";
-            //     //code...
-            // } catch (\PDOException $e) {
-            //     echo "connection fail" . $e->getMessage();
-            // }
+            //foi validado, direcionar para home
+            return redirect()->to('/');
 
 
 
-            //echo 'login submit efetivo';
-            //dd($request);
-            //echo $username;
-            //echo $request->input('text_username');
+//echo 'login submit efetivo';
+//dd($request);
+//echo $username;
+//echo $request->input('text_username');
         }
 
         public function logout()

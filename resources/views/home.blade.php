@@ -1,5 +1,5 @@
-<?php require_once('_html_header.php') ?>
-
+@extends('layouts.main_layout')
+@section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col">
@@ -64,5 +64,4 @@
         </div>
     </div>
 </div>
-
-<?php require_once('_html_footer.php') ?>
+@endsection

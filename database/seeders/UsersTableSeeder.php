@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         // create multiple users
 
-        DB::table('users_notes')->insert([
+        DB::table('users')->insert([
             [
                 'username' => 'user1@gmail.com',
                 'password' => bcrypt('abc123456'),
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s')
             ]
         ]
-            
+
     );
     }
 }

@@ -2,13 +2,20 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
+
 use App\Http\Middleware\CheckIsLogged;
+use App\Http\Middleware\CheckIsNoteLogged;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware;
 
+
 //auth routes
-Route::get('/login', [AuthController::class, 'login']);
-Route::post('/loginSubmit', [AuthController::class, 'loginSubmit']);
+//ó são acessíveis se o usuári NÃO estiver logado
+Route::middleware([CheckIsNoteLogged::class])->group((function () {
+    Route::get('/login', [AuthController::class, 'login']);
+    Route::post('/loginSubmit', [AuthController::class, 'loginSubmit']);
+}));
 
 
 Route::middleware([CheckIsLogged::class])->group((function(){
