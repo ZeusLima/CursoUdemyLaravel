@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    //use HasFactory;
+    public function notes(){
+        return $this->hasMany(Note::class);
+    }
 }
