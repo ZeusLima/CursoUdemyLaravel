@@ -12,16 +12,10 @@ class MainController extends Controller{
 
             //load user's notes
             $id = session('user.id');
-            $user = User::find($id)->toArray();
+            //$user = User::find($id)->toArray();    ITS NOT NECESSARY TO GET THE USER THIS, 'CAUS ITS ALREADY AVAILBLE INT HE SESSION
             $notes = User::find($id)->notes()->get()->toArray();
 
-            echo '<pre>';
-            print_r($user);
-            print_r($notes);
-
-            die();
-
-            return view('home');
+            return view('home', ['notes' => $notes]);
         }
 
     public function newNote()
@@ -29,7 +23,7 @@ class MainController extends Controller{
         echo 'new note page';
         return view('top_bar');
 
-        
+
     }
 
 }
