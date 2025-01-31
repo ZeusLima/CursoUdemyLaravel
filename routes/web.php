@@ -22,6 +22,14 @@ Route::middleware([CheckIsLogged::class])->group((function(){
 //rotas que só são acessíveis se estiver usuário logado
         Route::get('/', [MainController::class,'index'])->name('home');
         Route::get('/newNote',[MainController::class,'newNote'])->name('new');
+
+        //editting notes
+        Route::get('/editNote/{id}',[MainController::class,'editNote'])->name('edit');
+
+        //deletting notes
+        Route::get('/deleteNote/{id}',[MainController::class,'deleteNote'])->name('delete');
+
+
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
         }
     )

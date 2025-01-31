@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
+use App\Services\Operations;
 
 class MainController extends Controller{
 
@@ -20,10 +22,18 @@ class MainController extends Controller{
 
     public function newNote()
     {
-        echo 'new note page';
-        return view('top_bar');
+        //show new note view
 
+        return view('new_note');
 
+    }
+
+    public function editNote($id){
+        $id = Operations::decryptID($id);
+    }
+
+    public function deleteNote($id){
+        $id = Operations::decryptID($id);
     }
 
 }
