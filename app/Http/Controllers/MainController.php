@@ -29,11 +29,14 @@ class MainController extends Controller{
     }
 
     public function editNote($id){
+
         $id = Operations::decryptID($id);
+        echo "edit note page";
     }
 
     public function deleteNote($id){
         $id = Operations::decryptID($id);
+        echo "delete note page";
     }
 
 }

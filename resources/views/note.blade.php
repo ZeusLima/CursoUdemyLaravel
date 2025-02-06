@@ -18,5 +18,3 @@
     </div>
 </div>
 <br>
-
-{{-- vídeo parado ao 2 min antes de se linkar os botões de edição e exclusão de nota --}}
