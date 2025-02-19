@@ -12,6 +12,7 @@ class Operations{
         $value = Crypt::decrypt($value);
         }catch(DecryptException $e){
             return redirect()->route('home');
+            echo 'erro na "descriptação"';
 
         }
         return $value;
