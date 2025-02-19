@@ -29,7 +29,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label class="form-label">Note Title</label>
-                            <input type="text" class="form-control bg-primary text-white" name="text_title"  value= " {{ old('text_title' , $note) }}">
+                            <input type="text" class="form-control bg-primary text-white" name="text_title"  value= " {{ old('text_title' , $note->title) }}">
                                 @error("text_title")
                                     <div class="text-danger mt-3">
                                         {{$message}}
@@ -38,7 +38,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Note Text</label>
-                            <textarea class="form-control bg-primary text-white" name="text_note" rows="5" > {{ old('text_note', $note) }}</textarea>
+                            <textarea class="form-control bg-primary text-white" name="text_note" rows="5" > {{ old('text_note', $note->text) }}</textarea>
                                 @error("text_note")
                                     <div class="text-danger mt-3">
                                         {{$message}}

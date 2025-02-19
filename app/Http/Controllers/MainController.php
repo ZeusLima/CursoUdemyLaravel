@@ -72,7 +72,7 @@ class MainController extends Controller{
         $note = Note::find($id);
 
         //show edit note
-        return view('edit_note', ['note' => $note ]);
+        return view('edit_note', ['note'=>$note]);
 
     }
 
