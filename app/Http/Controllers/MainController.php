@@ -73,8 +73,11 @@ class MainController extends Controller{
 
         $id = Operations::decryptID($id);
         
+        
+        
         //load note
         $note = Note::find($id);
+        
 
         //show edit note
         return view('edit_note', ['note'=>$note]);
@@ -101,8 +104,9 @@ class MainController extends Controller{
         );
 
         //chef if note_id exists
-        //print($request->note_id);
-        dd($request);
+    //print($request->note_id);
+    dd($request);
+
         if(!$request->note_id == null){
             die('erro');
             redirect()->route('home');
@@ -117,7 +121,7 @@ class MainController extends Controller{
         //dd($note);
 
         //udpdate note
-        // $note->title = $request->text_title;
+         $note->title = $request->text_title;
         // $note->text = $request->text_note;
         // $note->save();
 
