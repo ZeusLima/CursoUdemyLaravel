@@ -36,8 +36,8 @@ class MainController extends Controller{
                 'text_title' => 'required|min:3|max:30',
                 'text_note' => 'required|min:3|max:3000'
             ],
-        //errror messages
-            [
+        
+            [//errror messages
                 'text_title.required' => "o title é obrigatóriox",
                 'text_title.min' => 'mínimo de 3 caracteres',
                 'text_title.max' => 'máximo de 30 c',
@@ -48,9 +48,12 @@ class MainController extends Controller{
             ]
         );
 
+       
+
         echo 'ok';
         //get user id
         $id = session('user.id');
+
         
         //crea new note
         $note = new Note();
@@ -64,16 +67,67 @@ class MainController extends Controller{
 
     }
 
+    
+
     public function editNote($id){
 
         $id = Operations::decryptID($id);
         
+        
+        
         //load note
         $note = Note::find($id);
+        
 
         //show edit note
         return view('edit_note', ['note'=>$note]);
 
+    }
+
+    public function editNoteSubmit(Request $request){
+        //validate request
+        $request->validate(
+            [
+                'text_title' => 'required|min:3|max:30',
+                'text_note' => 'required|min:3|max:3000'
+            ],
+        
+            [//errror messages
+                'text_title.required' => "o title é obrigatóriox",
+                'text_title.min' => 'mínimo de 3 caracteres',
+                'text_title.max' => 'máximo de 30 c',
+
+                'text_note.required' => "o title é obrigatóriox",
+                'text_note.min' => 'mínimo de 3 caracteres',
+                'text_note.max' => 'máximo de 3000 c',
+            ]
+        );
+
+        //chef if note_id exists
+    //print($request->note_id);
+    dd($request);
+
+        if(!$request->note_id == null){
+            die('erro');
+            redirect()->route('home');
+        }
+
+        //decrypt note_id
+        $id = Operations::decryptID($request->note_id);
+
+    
+        //loag note
+        $note = Note::find($id);
+        //dd($note);
+
+        //udpdate note
+         $note->title = $request->text_title;
+        // $note->text = $request->text_note;
+        // $note->save();
+
+        //redirect home
+        redirect()->route('home');
+            
     }
 
     public function deleteNote($id){

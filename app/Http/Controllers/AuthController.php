@@ -42,7 +42,7 @@ class AuthController extends Controller
 
             // //get all users from db
             // $users = User::all()->toArray();
-            $userModel = new User();
+            //$userModel = new User();
 
 
             // echo '<pre>';
@@ -83,7 +83,7 @@ class AuthController extends Controller
 
             }
 
-            echo "LOGOU";
+            //echo "LOGOU";
             //update last login
             $user->last_login = date('y-m-d H-i-s');
             $user->save();
@@ -92,10 +92,12 @@ class AuthController extends Controller
             session([
                 'user' => [
                     'id' =>$user->id,
-                    'username' => $user->$username
+                    'username' => $user->username,
+                    'last_login' => $user->last_login
                 ]
 
             ]);
+            
 
             //foi validado, direcionar para home
             return redirect()->to('/');
