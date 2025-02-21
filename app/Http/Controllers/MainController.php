@@ -11,15 +11,15 @@ use Illuminate\Http\Request;
 class MainController extends Controller{
 
     public function index()
-        {
+    {
 
-            //load user's notes
-            $id = session('user.id');
-            //$user = User::find($id)->toArray();    ITS NOT NECESSARY TO GET THE USER THIS, 'CAUS ITS ALREADY AVAILBLE INT HE SESSION
-            $notes = User::find($id)->notes()->get()->toArray();
+        //load user's notes
+        $id = session('user.id');
+        //$user = User::find($id)->toArray();    ITS NOT NECESSARY TO GET THE USER THIS, 'CAUS ITS ALREADY AVAILBLE INT HE SESSION
+        $notes = User::find($id)->notes()->get()->toArray();
 
-            return view('home', ['notes' => $notes]);
-        }
+        return view('home', ['notes' => $notes]);
+    }
 
     public function newNote()
     {
@@ -27,16 +27,16 @@ class MainController extends Controller{
 
         return view('new_note');
 
-        
     }
 
-    public function newNoteSubmit(Request $request){
+    public function newNoteSubmit(Request $request)
+    {
         $request->validate(
             [
                 'text_title' => 'required|min:3|max:30',
                 'text_note' => 'required|min:3|max:3000'
             ],
-        
+
             [//errror messages
                 'text_title.required' => "o title é obrigatóriox",
                 'text_title.min' => 'mínimo de 3 caracteres',
@@ -48,13 +48,13 @@ class MainController extends Controller{
             ]
         );
 
-       
+
 
         echo 'ok';
         //get user id
         $id = session('user.id');
 
-        
+
         //crea new note
         $note = new Note();
         $note->user_id = $id;
@@ -67,31 +67,29 @@ class MainController extends Controller{
 
     }
 
-    
-
-    public function editNote($id){
-
+    public function editNote($id)
+    {
         $id = Operations::decryptID($id);
-        
-        
-        
+
         //load note
-        $note = Note::find($id);
-        
+        $note = Note::findOrFail($id);
 
         //show edit note
         return view('edit_note', ['note'=>$note]);
 
     }
 
-    public function editNoteSubmit(Request $request){
+
+    public function editNoteSubmit(Request $request)
+    {
+
         //validate request
         $request->validate(
             [
                 'text_title' => 'required|min:3|max:30',
                 'text_note' => 'required|min:3|max:3000'
             ],
-        
+
             [//errror messages
                 'text_title.required' => "o title é obrigatóriox",
                 'text_title.min' => 'mínimo de 3 caracteres',
@@ -103,31 +101,30 @@ class MainController extends Controller{
             ]
         );
 
-        //chef if note_id exists
-    //print($request->note_id);
-    dd($request);
-
-        if(!$request->note_id == null){
-            die('erro');
-            redirect()->route('home');
+        //check if note_id exists e tá dando nulo sabe-se lá o porquê
+        if($request->note_id == null){
+            return redirect()->route('home');
         }
+
 
         //decrypt note_id
         $id = Operations::decryptID($request->note_id);
 
-    
         //loag note
         $note = Note::find($id);
-        //dd($note);
 
         //udpdate note
-         $note->title = $request->text_title;
-        // $note->text = $request->text_note;
-        // $note->save();
+        $note->title = $request->text_title;
+
+            //em casa usar $note->text = $request->text_note;
+            //no trab usar  $note->note = $request->text_note;
+            //tudo isso porque os atributos da tabela têm nome diferente
+        $note->text = $request->text_note;
+        $note->save();
 
         //redirect home
-        redirect()->route('home');
-            
+        return redirect()->route('home');
+
     }
 
     public function deleteNote($id){

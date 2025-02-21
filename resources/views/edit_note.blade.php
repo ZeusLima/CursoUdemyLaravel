@@ -17,14 +17,15 @@
                 <div class="col text-end">
                     <a href="{{route('home')}}" class="btn btn-outline-danger">
                         <i class="fa-solid fa-xmark"></i>
-                    </a>            
+                    </a>
                 </div>
             </div>
 
-            <!-- form -->  
-            
+            <!-- form -->
+
             <form action="{{ route('editNoteSubmit') }}" method="post">
                 @csrf
+                <input type="hidden" name="note_id" value="{{Crypt::encrypt($note->id) }}">
                 <div class="row mt-3">
                     <div class="col">
                         <div class="mb-3">
@@ -34,7 +35,7 @@
                                     <div class="text-danger mt-3">
                                         {{$message}}
                                     </div>
-                                @enderror 
+                                @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Note Text</label>
@@ -43,7 +44,7 @@
                                     <div class="text-danger mt-3">
                                         {{$message}}
                                     </div>
-                                @enderror 
+                                @enderror
                         </div>
                     </div>
                 </div>
@@ -54,7 +55,7 @@
                     </div>
                 </div>
             </form>
-            
+
         </div>
     </div>
 </div>
