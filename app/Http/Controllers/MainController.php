@@ -10,27 +10,23 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller{
 
-    public function index()
-    {
-
+    public function index(){
         //load user's notes
         $id = session('user.id');
         //$user = User::find($id)->toArray();    ITS NOT NECESSARY TO GET THE USER THIS, 'CAUS ITS ALREADY AVAILBLE INT HE SESSION
-        $notes = User::find($id)->notes()->get()->toArray();
+        $notes = User::find($id)->notes()->whereNull('deleted_at')->get()->toArray();
 
         return view('home', ['notes' => $notes]);
     }
 
-    public function newNote()
-    {
+    public function newNote(){
         //show new note view
 
         return view('new_note');
 
     }
 
-    public function newNoteSubmit(Request $request)
-    {
+    public function newNoteSubmit(Request $request){
         $request->validate(
             [
                 'text_title' => 'required|min:3|max:30',
@@ -67,8 +63,7 @@ class MainController extends Controller{
 
     }
 
-    public function editNote($id)
-    {
+    public function editNote($id){
         $id = Operations::decryptID($id);
 
         //load note
@@ -80,8 +75,7 @@ class MainController extends Controller{
     }
 
 
-    public function editNoteSubmit(Request $request)
-    {
+    public function editNoteSubmit(Request $request){
 
         //validate request
         $request->validate(
@@ -129,7 +123,38 @@ class MainController extends Controller{
 
     public function deleteNote($id){
         $id = Operations::decryptID($id);
-        echo "delete note page";
+        
+        //load note
+
+        $note = Note::find($id);
+
+
+        //show delete note confirmation
+        return view('delete_note', ['note'=>$note]);
+    }
+
+    public function deleteNoteConfirm($id){
+        // $id = Operations::decryptID($id);
+        // $note = Note::find($id);
+        // delete($note);
+
+
+        //check if is ecnrypt
+        $id = Operations::decryptID($id);
+
+        //load note
+        $note = Note::find($id);
+
+        //hard delete
+        $note->delete();
+
+        //soft delete
+        $note->deleted_at = date('Y:m:d H:i:s');
+        $note->save();
+        //redirect home
+
+        return redirect()->route('home');
+
     }
 
 }
